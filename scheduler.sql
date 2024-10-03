@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS scheduer
     writer VARCHAR(30) NOT NULL comment '작성자명',
     password VARCHAR(20) NOT NULL comment '비밀번호',
     todo VARCHAR(400) comment '할 일',
-    created_date TIMESTAMP comment '최초 작성일',
-    updated_date TIMESTAMP comment '수정일'
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '최초 작성일',
+    updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '수정일'
 );
 
 
@@ -42,6 +42,15 @@ CREATE TABLE IF NOT EXISTS scheduer
     created_date TIMESTAMP comment '최초 작성일',
     updated_date TIMESTAMP comment '수정일'
 );
+
+# '최초 작성일' 과 '수정일' 시간 반영
+ALTER TABLE scheduler MODIFY created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '최초 작성일';
+ALTER TABLE scheduler MODIFY updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '수정일';
 */
+
+
+# 현재 Default Timezone 설정 확인
+SELECT @@global.time_zone, @@session.time_zone;
+
 
 
