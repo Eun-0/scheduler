@@ -1,4 +1,4 @@
-package com.sparta.scheduler;
+package com.eun0.scheduler;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
