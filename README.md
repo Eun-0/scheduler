@@ -17,12 +17,12 @@
 ### 1) 필수 기능 ( ~ Lv 3)
 ![ERD1](/img/ERD1.png)      
 
-|    | SCHEDULER         | TYPE         |
+|    | SCHEDULE          | TYPE         |
 |:--:|-------------------|--------------|
 | PK | SCHEDULER_ID      | BIGINT       |
 |    | WRITER            | VARCHAR(30)  |
 |    | PASSWORD          | VARCHAR(20)  |
-|    | SCHEDULE          | VARCHAR(400) |
+|    | TODO              | VARCHAR(400) |
 |    | CREATION_DATE     | TIMESTAMP    |
 |    | MODIFICATION_DATE | TIMESTAMP    |
 
