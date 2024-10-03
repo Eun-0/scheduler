@@ -5,9 +5,9 @@ import lombok.Getter;
 import java.sql.Timestamp;
 
 @Getter
-public class SchedulerRequestDto {
+public class ScheduleResponseDto {
+    private Long id;
     private String writer;
-    private String password;
-    private String schedule;
+    private String todo;
     private Timestamp modificationDate;
 }
