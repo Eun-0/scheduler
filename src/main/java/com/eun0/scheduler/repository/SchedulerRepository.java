@@ -1,5 +1,6 @@
 package com.eun0.scheduler.repository;
 
+import com.eun0.scheduler.dto.ScheduleRequestDto;
 import com.eun0.scheduler.dto.ScheduleResponseDto;
 import com.eun0.scheduler.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -58,5 +59,34 @@ public class SchedulerRepository {
                 return new ScheduleResponseDto(id, writer, todo, createdDate, updatedDate);
             }
         });
+    }
+
+    public void update(Long id, ScheduleRequestDto requestDto) {
+        String sql = "UPDATE scheduler SET writer = ?, todo = ? WHERE scheduler_id = ?";
+        jdbcTemplate.update(sql, requestDto.getWriter(), requestDto.getTodo(), id);
+    }
+
+    public Schedule findById(Long id, String password) {
+        // DB 조회
+        String sql = "SELECT * FROM scheduler WHERE scheduler_id = ?";
+
+        return jdbcTemplate.query(sql, resultSet -> {
+            if(resultSet.next()) {
+                // 비밀번호 확인
+                String dbPassword = resultSet.getString("password");
+                // 비밀번호 불일치
+                if (!dbPassword.equals(password)) {
+                    throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+                }
+
+                // 비밀번호 일치
+                Schedule schedule = new Schedule();
+                schedule.setWriter(resultSet.getString("writer"));
+                schedule.setTodo(resultSet.getString("todo"));
+                return schedule;
+            } else {
+                return null;
+            }
+        }, id);
     }
 }

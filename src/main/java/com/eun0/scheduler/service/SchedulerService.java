@@ -33,4 +33,18 @@ public class SchedulerService {
         // DB 조회
         return schedulerRepository.findAll();
     }
+
+    public Long updateSchedule(Long id, ScheduleRequestDto requestDto) {
+        // 해당 스케줄이 DB에 존재하는지 확인
+        // 비밀번호 일치 여부 확인
+        Schedule schedule = schedulerRepository.findById(id, requestDto.getPassword());
+        if(schedule != null) {
+            // schedule 내용 수정
+            schedulerRepository.update(id, requestDto);
+
+            return id;
+        } else {
+            throw new IllegalArgumentException("선택한 스케쥴은 존재하지 않습니다.");
+        }
+    }
 }

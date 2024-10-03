@@ -9,5 +9,4 @@ public class ScheduleRequestDto {
     private String writer;
     private String password;
     private String todo;
-    private Timestamp updatedDate;
 }
