@@ -6,10 +6,12 @@ import com.eun0.scheduler.entity.Schedule;
 import com.eun0.scheduler.service.SchedulerService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/scheduler")
 public class SchedulerController {
 
     private final SchedulerService schedulerService;
@@ -19,25 +21,31 @@ public class SchedulerController {
     }
 
     // CREATE
-    @PostMapping("/scheduler")
+    @PostMapping("")
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
         return schedulerService.createSchedule(requestDto);
     }
 
     // READ
-    @GetMapping("/scheduler")
-    public List<ScheduleResponseDto> readSchedules() {
-        return schedulerService.getSchedules();
+    @GetMapping("")
+    public List<ScheduleResponseDto> readAllSchedules() {
+        return schedulerService.readAllSchedules();
     }
 
-    @GetMapping("/scheduler/{schedulerId}")
+    @GetMapping("/{schedulerId}")
     public ScheduleResponseDto readSchedule(@PathVariable("schedulerId") Long id) {
-        return schedulerService.getSchedule(id);
+        return schedulerService.readSchedule(id);
     }
 
     // UPDATE
-    @PutMapping("/scheduler/{schedulerId}")
+    @PutMapping("/{schedulerId}")
     public Long updateSchedule(@PathVariable("schedulerId") Long id, @RequestBody ScheduleRequestDto requestDto) {
         return schedulerService.updateSchedule(id, requestDto);
+    }
+
+    // DELETE
+    @DeleteMapping("/{schedulerId}")
+    public Long deleteSchedule(@PathVariable("schedulerId") Long id, @RequestBody HashMap<String, String> request) {
+        return schedulerService.deleteSchedule(id, request.get("password"));
     }
 }

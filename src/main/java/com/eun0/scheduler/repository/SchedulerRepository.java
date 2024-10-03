@@ -38,9 +38,10 @@ public class SchedulerRepository {
 
         // DB Insert 후 받아온 기본키 확인
         Long id = keyHolder.getKey().longValue();
-        schedule.setId(id);
 
-        return schedule;
+        // 생성 확인
+        Schedule createdSchedule = findById(id);
+        return createdSchedule;
     }
 
     public List<ScheduleResponseDto> readAll() {
@@ -64,6 +65,11 @@ public class SchedulerRepository {
     public void update(Long id, ScheduleRequestDto requestDto) {
         String sql = "UPDATE scheduler SET writer = ?, todo = ?" + " WHERE scheduler_id = ?";
         jdbcTemplate.update(sql, requestDto.getWriter(), requestDto.getTodo(), id);
+    }
+
+    public void delete(Long id) {
+        String sql = "DELETE FROM scheduler WHERE scheduler_id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     public Schedule findById(Long id) {

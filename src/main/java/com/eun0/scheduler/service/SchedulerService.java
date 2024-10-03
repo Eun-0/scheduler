@@ -29,7 +29,7 @@ public class SchedulerService {
         return responseDto;
     }
 
-    public List<ScheduleResponseDto> getSchedules() {
+    public List<ScheduleResponseDto> readAllSchedules() {
         // DB 조회
         return schedulerRepository.readAll();
     }
@@ -37,6 +37,7 @@ public class SchedulerService {
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto) {
         // 해당 스케줄이 DB에 존재하는지 확인
         Schedule schedule = schedulerRepository.findById(id);
+
         if(schedule != null) {
             // 비밀번호 일치 여부 확인
             if(!schedule.getPassword().equals(requestDto.getPassword())) {
@@ -47,11 +48,11 @@ public class SchedulerService {
                 return id;
             }
         } else {
-            return -1L;         // -1: 해당 스케줄이 존재하지 않음
+            return -1L;         // -1: 해당 스케줄이 DB에 존재하지 않음
         }
     }
 
-    public ScheduleResponseDto getSchedule(Long id) {
+    public ScheduleResponseDto readSchedule(Long id) {
         // 해당 스케줄이 DB에 존재하는지 확인
         Schedule readSchedule = schedulerRepository.findById(id);
 
@@ -59,5 +60,23 @@ public class SchedulerService {
         ScheduleResponseDto responseDto = new ScheduleResponseDto(readSchedule);
 
         return responseDto;
+    }
+
+    public Long deleteSchedule(Long id, String password) {
+        // 해당 스케줄이 DB에 존재하는지 확인
+        Schedule schedule = schedulerRepository.findById(id);
+
+        if(schedule != null) {
+            // 비밀번호 일치 여부 확인
+            if(!schedule.getPassword().equals(password)) {
+                return -2L;     // -2: 비밀번호 불일치
+            } else {
+                // schedule 내용 수정
+                schedulerRepository.delete(id);
+                return id;
+            }
+        } else {
+            return -1L;         // -1: 해당 스케줄이 DB에 존재하지 않음
+        }
     }
 }
