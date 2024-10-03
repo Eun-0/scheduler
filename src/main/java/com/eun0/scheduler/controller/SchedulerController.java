@@ -32,6 +32,7 @@ public class SchedulerController {
         return schedulerService.readAllSchedules();
     }
 
+    // READ
     @GetMapping("/{schedulerId}")
     public ScheduleResponseDto readSchedule(@PathVariable("schedulerId") Long id) {
         return schedulerService.readSchedule(id);

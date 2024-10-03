@@ -39,9 +39,8 @@ public class SchedulerRepository {
         // DB Insert 후 받아온 기본키 확인
         Long id = keyHolder.getKey().longValue();
 
-        // 생성 확인
-        Schedule createdSchedule = findById(id);
-        return createdSchedule;
+        // 저장된 스케줄 읽어오기
+        return findById(id);
     }
 
     public List<ScheduleResponseDto> readAll() {
