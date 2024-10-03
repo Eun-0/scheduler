@@ -43,7 +43,7 @@ public class SchedulerRepository {
         return schedule;
     }
 
-    public List<ScheduleResponseDto> findAll() {
+    public List<ScheduleResponseDto> readAll() {
         // DB 조회
         String sql = "SELECT * FROM scheduler";
 
@@ -62,27 +62,23 @@ public class SchedulerRepository {
     }
 
     public void update(Long id, ScheduleRequestDto requestDto) {
-        String sql = "UPDATE scheduler SET writer = ?, todo = ? WHERE scheduler_id = ?";
+        String sql = "UPDATE scheduler SET writer = ?, todo = ?" + " WHERE scheduler_id = ?";
         jdbcTemplate.update(sql, requestDto.getWriter(), requestDto.getTodo(), id);
     }
 
-    public Schedule findById(Long id, String password) {
+    public Schedule findById(Long id) {
         // DB 조회
         String sql = "SELECT * FROM scheduler WHERE scheduler_id = ?";
 
         return jdbcTemplate.query(sql, resultSet -> {
-            if(resultSet.next()) {
-                // 비밀번호 확인
-                String dbPassword = resultSet.getString("password");
-                // 비밀번호 불일치
-                if (!dbPassword.equals(password)) {
-                    throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-                }
-
-                // 비밀번호 일치
+            if (resultSet.next()) {
                 Schedule schedule = new Schedule();
+                schedule.setId(id);
                 schedule.setWriter(resultSet.getString("writer"));
+                schedule.setPassword(resultSet.getString("password"));
                 schedule.setTodo(resultSet.getString("todo"));
+                schedule.setCreatedDate(resultSet.getTimestamp("created_date"));
+                schedule.setUpdatedDate(resultSet.getTimestamp("updated_date"));
                 return schedule;
             } else {
                 return null;

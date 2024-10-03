@@ -31,20 +31,33 @@ public class SchedulerService {
 
     public List<ScheduleResponseDto> getSchedules() {
         // DB 조회
-        return schedulerRepository.findAll();
+        return schedulerRepository.readAll();
     }
 
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto) {
         // 해당 스케줄이 DB에 존재하는지 확인
-        // 비밀번호 일치 여부 확인
-        Schedule schedule = schedulerRepository.findById(id, requestDto.getPassword());
+        Schedule schedule = schedulerRepository.findById(id);
         if(schedule != null) {
-            // schedule 내용 수정
-            schedulerRepository.update(id, requestDto);
-
-            return id;
+            // 비밀번호 일치 여부 확인
+            if(!schedule.getPassword().equals(requestDto.getPassword())) {
+                return -2L;     // -2: 비밀번호 불일치
+            } else {
+                // schedule 내용 수정
+                schedulerRepository.update(id, requestDto);
+                return id;
+            }
         } else {
-            throw new IllegalArgumentException("선택한 스케쥴은 존재하지 않습니다.");
+            return -1L;         // -1: 해당 스케줄이 존재하지 않음
         }
+    }
+
+    public ScheduleResponseDto getSchedule(Long id) {
+        // 해당 스케줄이 DB에 존재하는지 확인
+        Schedule readSchedule = schedulerRepository.findById(id);
+
+        // Entity -> ResponseDto
+        ScheduleResponseDto responseDto = new ScheduleResponseDto(readSchedule);
+
+        return responseDto;
     }
 }

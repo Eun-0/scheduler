@@ -26,8 +26,13 @@ public class SchedulerController {
 
     // READ
     @GetMapping("/scheduler")
-    public List<ScheduleResponseDto> getSchedules() {
+    public List<ScheduleResponseDto> readSchedules() {
         return schedulerService.getSchedules();
+    }
+
+    @GetMapping("/scheduler/{schedulerId}")
+    public ScheduleResponseDto readSchedule(@PathVariable("schedulerId") Long id) {
+        return schedulerService.getSchedule(id);
     }
 
     // UPDATE
