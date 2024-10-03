@@ -1,17 +1,18 @@
-# CREATE table SCHEDULER
-CREATE TABLE IF NOT EXISTS SCHEDULER
+# CREATE scheduler 테이블
+CREATE TABLE IF NOT EXISTS scheduer
 (
-    SCHEDULER_ID BIGINT AUTO_INCREMENT PRIMARY KEY comment 'SCHEDULER의 고유 식별자',
-    WRITER VARCHAR(30) NOT NULL comment '작성자명',
-    PASSWORD VARCHAR(20) NOT NULL comment '비밀번호',
-    TODO VARCHAR(400) comment '할 일',
-    CREATION_DATE TIMESTAMP comment '최초 작성일',
-    MODIFICATION_DATE TIMESTAMP comment '수정일'
+    scheduler_id BIGINT AUTO_INCREMENT PRIMARY KEY comment 'SCHEDULER의 고유 식별자',
+    writer VARCHAR(30) NOT NULL comment '작성자명',
+    password VARCHAR(20) NOT NULL comment '비밀번호',
+    todo VARCHAR(400) comment '할 일',
+    created_date TIMESTAMP comment '최초 작성일',
+    updated_date TIMESTAMP comment '수정일'
 );
+
 
 -- 위 코드는 아래 수정 과정 후, 완성된 코드
 /*
-# CREATE table SCHEDULER
+# CREATE SCHEDULER 테이블
 CREATE TABLE IF NOT EXISTS SCHEDULER
 (
     SCHEDULER_ID BIGINT AUTO_INCREMENT PRIMARY KEY comment 'SCHEDULER의 고유 식별자',
@@ -28,4 +29,19 @@ ALTER TABLE SCHEDULER CHANGE SCHEDULE TODO VARCHAR(400);
 
 # '할 일' comment를 추가하지 않아서 comment 추가
 ALTER TABLE SCHEDULER MODIFY TODO VARCHAR(400) comment '할 일';
+
+# SCHEDULER 테이블 삭제 및 Database의 Naming Rule에 따른 테이블 생성
+DROP TABLE SCHEDULER;
+
+CREATE TABLE IF NOT EXISTS scheduer
+(
+    scheduler_id BIGINT AUTO_INCREMENT PRIMARY KEY comment 'SCHEDULER의 고유 식별자',
+    writer VARCHAR(30) NOT NULL comment '작성자명',
+    password VARCHAR(20) NOT NULL comment '비밀번호',
+    todo VARCHAR(400) comment '할 일',
+    created_date TIMESTAMP comment '최초 작성일',
+    updated_date TIMESTAMP comment '수정일'
+);
 */
+
+
