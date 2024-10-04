@@ -45,14 +45,15 @@
 <br>
 
 #### B. 전체 일정 조회
+- ResponseBody
 ```
 [
     {
         "id": 100,
         "writer": "스파르타",
-    "todo": "공부하기",
-    "createdDate": "2024-10-04T00:17:40.000+00:00",
-    "updatedDate": "2024-10-04T00:17:40.000+00:00"
+      "todo": "공부하기",
+      "createdDate": "2024-10-04T00:17:40.000+00:00",
+      "updatedDate": "2024-10-04T00:17:40.000+00:00"
     },
     {
         "id": 3,
@@ -87,6 +88,8 @@
 <br>
 
 #### C. 일정 검색
+- @RequestParam(required = false) String writer: 검색하려는 작성자
+- @RequestParam(required = false) Timestamp updatedDate: 검색하려는 수정일
 
 <br>
 
