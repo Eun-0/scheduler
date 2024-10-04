@@ -45,7 +45,7 @@ public class SchedulerRepository {
 
     public List<ScheduleResponseDto> readAll() {
         // DB 조회
-        String sql = "SELECT * FROM scheduler";
+        String sql = "SELECT * FROM scheduler ORDER BY updated_date DESC";
 
         return jdbcTemplate.query(sql, new RowMapper<ScheduleResponseDto>() {
             @Override
