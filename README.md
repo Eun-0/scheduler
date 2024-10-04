@@ -2,14 +2,124 @@
 
 ## API 명세서
 
-| 기능        | Method | URL                          | Request      | Response | Return                     |
-|-----------|--------|------------------------------|--------------|----------|----------------------------|
-| 일정 생성     | POST   | /api/scheduler               | RequestBody  | 생성 정보    | SchedulerResponseDto       |
-| 전체 일정 조회  | GET    | /api/scheduler               | RequestParam | 다건 응답 정보 | List<SchedulerResponseDto> |
-| 일정 검색     | GET    | /api/scheduler/search        | RequestParam | 다건 응답 정보 | List<SchedulerResponseDto> |
-| 선택한 일정 조회 | GET    | /api/scheduler/{schedulerId} | RequestParam | 단건 응답 정보 | SchedulerResponseDto       |
-| 선택한 일정 수정 | PUT    | /api/scheduler/{schedulerId} | RequestBody  | 수정 정보    | Long                       |
-| 선택한 일정 삭제 | DELETE | /api/scheduler/{schedulerId} | RequestParam | -        | Long                       |
+### 공통 요청(Request) 및 응답(Response) 형식
+- API 요청 및 응답에 사용하는 데이터 형식은 ‘applicatoin/json’으로 제한하였습니다.
+    ```
+    Content-Type: application/json
+    ```
+- 선택한 일정 수정과 삭제는 해당 일정의 고유 식별자를 반환합니다.
+  - -1: 해당 스케줄은 DB에 존재하지 않음
+  - -2: 비밀번호 불일치
+- DB에 저장된 날짜 관련 데이터는 모두 UTC로 저장되어 있습니다.
+
+### API 명세서
+
+| 기능        | Method | URL                          | Request                      | Response  | Return                      |
+|-----------|--------|------------------------------|------------------------------|-----------|-----------------------------|
+| 일정 생성     | POST   | /api/scheduler               | RequestBody                  | 생성된 일정 정보 | SchedulerResponseDto        |
+| 전체 일정 조회  | GET    | /api/scheduler               | -                            | 모든 일정 정보  | List <SchedulerResponseDto> |
+| 일정 검색     | GET    | /api/scheduler/search        | RequestParam                 | 검색된 일정 정보 | List <SchedulerResponseDto> |
+| 선택한 일정 조회 | GET    | /api/scheduler/{schedulerId} | RequestVariable              | 선택한 일정 정보 | SchedulerResponseDto        |
+| 선택한 일정 수정 | PUT    | /api/scheduler/{schedulerId} | RequestVariable, RequestBody | 수정된 일정 ID | Long                        |
+| 선택한 일정 삭제 | DELETE | /api/scheduler/{schedulerId} | RequestVariable, RequestBody | 삭제된 일정 ID | Long                        |
+
+#### 1. 일정 생성
+- RequestBody
+```
+{
+    "writer": "스파르타",
+    "password": "sparta24",
+    "todo": "공부하기"
+}
+```
+- ResponseBody
+```
+{
+    "id": 1005,
+    "writer": "스파르타",
+    "todo": "공부하기",
+    "createdDate": "2024-10-04T00:17:40.000+00:00",
+    "updatedDate": "2024-10-04T00:17:40.000+00:00"
+}
+```
+<br>
+
+#### 2. 전체 일정 조회
+```
+[
+    {
+        "id": 100,
+        "writer": "스파르타",
+    "todo": "공부하기",
+    "createdDate": "2024-10-04T00:17:40.000+00:00",
+    "updatedDate": "2024-10-04T00:17:40.000+00:00"
+    },
+    {
+        "id": 3,
+        "writer": "새벽이",
+        "todo": "Bling Bling is my name",
+        "createdDate": "2024-10-03T12:42:15.000+00:00",
+        "updatedDate": "2024-10-03T22:42:15.000+00:00"
+    },
+    {
+        "id": 1004,
+        "writer": "베르",
+        "todo": "간식 먹기",
+        "createdDate": "2024-09-28T15:53:07.000+00:00",
+        "updatedDate": "2024-10-03T19:44:30.000+00:00"
+    },
+    {
+        "id": 7777777,
+        "writer": "하늘",
+        "todo": "행복하자~ 아프지망고",
+        "createdDate": "2024-10-03T15:57:54.000+00:00",
+        "updatedDate": "2024-10-03T15:57:54.000+00:00"
+    },
+    {
+        "id": 2,
+         "writer": "스티븐 잡스",
+        "todo": "일하자",
+        "createdDate": "2024-09-29T15:53:07.000+00:00",
+        "updatedDate": "2024-10-01T23:11:22.000+00:00"
+    }
+]
+```
+<br>
+
+#### 3. 일정 검색
+
+<br>
+
+#### 4. 선택한 일정 조회
+- @PathVariable: 선택한 일정의 고유 식별자
+- ResponseBody
+```
+{
+    "id": 1005,
+    "writer": "스파르타",
+    "todo": "공부하기",
+    "createdDate": "2024-10-04T00:17:40.000+00:00",
+    "updatedDate": "2024-10-04T00:17:40.000+00:00"
+}
+```
+<br>
+
+#### 5. 선택한 일정 수정
+- @PathVariable: 선택한 일정의 고유 식별자
+- RequestBody
+```
+{
+    "writer": "스파르타",
+    "todo": "공부도 하고~ 쉬기도 하고~ 운동도 하고~ 룰루랄라~ 울랄라~~"
+}
+```
+- Return: 수정된 일정의 고유 식별자
+
+<br>
+
+#### 6. 선택한 일정 삭제
+- @PathVariable: 선택한 일정의 고유 식별자
+- Return: 삭제된 일정의 고유 식별자
 
 ---
 ## ERD
