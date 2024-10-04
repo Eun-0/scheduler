@@ -23,7 +23,7 @@
 | 선택한 일정 수정 | PUT    | /api/scheduler/{schedulerId} | RequestVariable, RequestBody | 수정된 일정 ID | Long                        |
 | 선택한 일정 삭제 | DELETE | /api/scheduler/{schedulerId} | RequestVariable, RequestBody | 삭제된 일정 ID | Long                        |
 
-#### 1. 일정 생성
+#### A. 일정 생성
 - RequestBody
 ```
 {
@@ -44,7 +44,7 @@
 ```
 <br>
 
-#### 2. 전체 일정 조회
+#### B. 전체 일정 조회
 ```
 [
     {
@@ -86,11 +86,11 @@
 ```
 <br>
 
-#### 3. 일정 검색
+#### C. 일정 검색
 
 <br>
 
-#### 4. 선택한 일정 조회
+#### D. 선택한 일정 조회
 - @PathVariable: 선택한 일정의 고유 식별자
 - ResponseBody
 ```
@@ -104,7 +104,7 @@
 ```
 <br>
 
-#### 5. 선택한 일정 수정
+#### E. 선택한 일정 수정
 - @PathVariable: 선택한 일정의 고유 식별자
 - RequestBody
 ```
