@@ -2,13 +2,11 @@ package com.eun0.scheduler.controller;
 
 import com.eun0.scheduler.dto.ScheduleRequestDto;
 import com.eun0.scheduler.dto.ScheduleResponseDto;
-import com.eun0.scheduler.entity.Schedule;
 import com.eun0.scheduler.service.SchedulerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/scheduler")
@@ -26,7 +24,7 @@ public class SchedulerController {
         return schedulerService.createSchedule(requestDto);
     }
 
-    // READ
+    // READ ALL
     @GetMapping("")
     public List<ScheduleResponseDto> readAllSchedules() {
         return schedulerService.readAllSchedules();

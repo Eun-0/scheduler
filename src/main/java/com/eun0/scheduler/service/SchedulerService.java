@@ -21,10 +21,10 @@ public class SchedulerService {
         Schedule schedule = new Schedule(requestDto);
 
         // DB 저장
-        Schedule saveSchedule = schedulerRepository.save(schedule);
+        Schedule savedSchedule = schedulerRepository.save(schedule);
 
         // Entity -> ResponseDto
-        ScheduleResponseDto responseDto = new ScheduleResponseDto(saveSchedule);
+        ScheduleResponseDto responseDto = new ScheduleResponseDto(savedSchedule);
 
         return responseDto;
     }

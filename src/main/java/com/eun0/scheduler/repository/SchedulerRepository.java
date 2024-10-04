@@ -50,7 +50,7 @@ public class SchedulerRepository {
         return jdbcTemplate.query(sql, new RowMapper<ScheduleResponseDto>() {
             @Override
             public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                // SQL 의 결과로 받아온 Scheduler 데이터들을 ScheduleResponseDto 타입으로 변환해 줄 메서드
+                // SQL 의 결과로 받아온 Schedule 데이터들을 ScheduleResponseDto 타입으로 변환
                 Long id = rs.getLong("scheduler_id");
                 String writer = rs.getString("writer");
                 String todo = rs.getString("todo");
